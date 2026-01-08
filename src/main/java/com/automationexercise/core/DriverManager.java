@@ -15,10 +15,10 @@ public class DriverManager {
     }
 
     public static WebDriver getDriver() {
-        if (driverThreadLocal.get() == null) {
-            driverThreadLocal.set(createDriver());
+        if (driverThreadLocal.get() == null) { // перевірка на те чи є вже створений драйвер для цього тесту\потоку
+            driverThreadLocal.set(createDriver()); // якщо нема драйверу - то створюємо новий
         }
-        return driverThreadLocal.get();
+        return driverThreadLocal.get(); // віддаємо драйвер до тесту
     }
 
     private static WebDriver createDriver() {

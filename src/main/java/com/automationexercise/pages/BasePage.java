@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.components.MainMenu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,12 +11,14 @@ import java.time.Duration;
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected final Duration defaultTimeout = Duration.ofSeconds(10); // 10с надійніше для UI
+    protected MainMenu mainMenu;
+    protected final Duration defaultTimeout = Duration.ofSeconds(10);
 
     //Конструктор для ініціалізації
     protected BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, defaultTimeout);
+        this.mainMenu = new MainMenu(driver);
     }
 
     // Використовуємо вже створений об'єкт 'wait'
