@@ -1,9 +1,31 @@
 package com.automationexercise.pages;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage{
 
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+    //Locators
+    private final By inputNewUserNameLocator = By.xpath("//input[@data-qa='signup-name']");
+    private final By inputNewUserEmailLocator = By.xpath("//input[@data-qa='signup-email']");
+    private final By signupButtonLocator = By.xpath("//button[@data-qa='signup-button']");
+
+    //Mothods
+    public LoginPage setName(String name) {
+        type(inputNewUserNameLocator, name);
+        return this;
+    }
+
+    public LoginPage setEmail(String email) {
+        type(inputNewUserEmailLocator, email);
+        return this;
+    }
+
+    public CreateAccountPage clickSignupButton() {
+        click(signupButtonLocator);
+        return new CreateAccountPage(driver);
     }
 }

@@ -1,27 +1,24 @@
 package com.automationexercise.pages;
 
-import com.automationexercise.components.MainMenu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected MainMenu mainMenu;
-    protected final Duration defaultTimeout = Duration.ofSeconds(10);
+    protected final Duration defaultTimeout = Duration.ofSeconds(5);
 
     //Конструктор для ініціалізації
     protected BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, defaultTimeout);
-        this.mainMenu = new MainMenu(driver);
     }
 
-    // Використовуємо вже створений об'єкт 'wait'
     public WebElement waitUntilVisibilityOfElementLocated(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -35,7 +32,10 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    // Скорочені методи для зручності (click та type)
+    public WebElement find (By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
     protected void click(By locator) {
         waitUntilElementClickable(locator).click();
     }
@@ -44,6 +44,12 @@ public abstract class BasePage {
         WebElement element = waitUntilVisibilityOfElementLocated(locator);
         element.clear();
         element.sendKeys(text);
+    }
+
+    protected void selectByVisibleText(By locator, String text) {
+        WebElement element = waitUntilVisibilityOfElementLocated(locator);
+        Select select = new Select(element);
+        select.selectByVisibleText(text);
     }
 
     public void removeAds() {
