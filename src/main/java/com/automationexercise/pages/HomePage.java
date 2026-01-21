@@ -10,7 +10,7 @@ public class HomePage extends BasePage {
     }
 
     private final By cookieAggryButtonLocator = By.xpath("//button[@aria-label='Consent']");
-
+    protected final By logoLocator = By.xpath("//img[contains(@src,'logo.png')]");
 
     public HomePage openHomePage() {
         driver.get("https://www.automationexercise.com/");
@@ -19,6 +19,11 @@ public class HomePage extends BasePage {
 
     public HomePage clickConsentButton(){
         click(cookieAggryButtonLocator);
+        return this;
+    }
+
+    public HomePage assertHomePageIsSuccessfullyLoaded() {
+        waitUntilVisibilityOfElementLocated(logoLocator);
         return this;
     }
 }

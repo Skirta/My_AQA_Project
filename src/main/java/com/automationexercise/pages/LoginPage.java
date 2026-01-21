@@ -12,6 +12,7 @@ public class LoginPage extends BasePage{
     private final By inputNewUserNameLocator = By.xpath("//input[@data-qa='signup-name']");
     private final By inputNewUserEmailLocator = By.xpath("//input[@data-qa='signup-email']");
     private final By signupButtonLocator = By.xpath("//button[@data-qa='signup-button']");
+    private final By newUserSignupTextLocator = By.xpath("//h2[text()='New User Signup!']");
 
     //Mothods
     public LoginPage setName(String name) {
@@ -24,8 +25,15 @@ public class LoginPage extends BasePage{
         return this;
     }
 
+    public LoginPage assertLoginPageIsSuccessfullyLoaded() {
+        waitUntilVisibilityOfElementLocated(newUserSignupTextLocator);
+        return this;
+    }
+
     public CreateAccountPage clickSignupButton() {
         click(signupButtonLocator);
         return new CreateAccountPage(driver);
     }
+
+
 }

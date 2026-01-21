@@ -16,6 +16,8 @@ public class UserFactory {
                 .firstName(DataRandomizer.getRandomFirstName())
                 .lastName(DataRandomizer.getRandomLastName())
                 .companyName(DataRandomizer.getRandomCompanyName())
+                .firstAddress(DataRandomizer.getRandomFirstAddress())
+                .secondAddress(DataRandomizer.getRandomSecondAddress())
                 .country(DataRandomizer.getRandomCountry())
                 .state(DataRandomizer.getRandomState())
                 .city(DataRandomizer.getRandomCity())

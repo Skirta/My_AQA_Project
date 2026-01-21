@@ -34,8 +34,14 @@ public class CreateAccountPage extends BasePage {
     private final By inputZipcodeLocator = By.id("zipcode");
     private final By inputMobileNumberLocator = By.id("mobile_number");
     private final By createAccountButtonLocator = By.xpath("//button[@data-qa='create-account']");
+    private final By enterAccountInformationTextLocator = By.xpath("//b[text()='Enter Account Information']");
 
     //Methods
+    public CreateAccountPage assertCreateAccountPageIsSuccessfullyLoaded() {
+        waitUntilVisibilityOfElementLocated(enterAccountInformationTextLocator);
+        return this;
+    }
+
     public CreateAccountPage clickGenderRadioButton(UserRegistrationDetails.Gender title) {
         if (title.equals(UserRegistrationDetails.Gender.MR)) {
             click(genderMrRadioButtonLocator);
@@ -137,5 +143,10 @@ public class CreateAccountPage extends BasePage {
     public CreateAccountPage setMobileNumber(String mobileNumber) {
         type(inputMobileNumberLocator, mobileNumber);
         return this;
+    }
+
+    public HomePage clickCreateAccountButton() {
+        click(createAccountButtonLocator);
+        return new HomePage(driver);
     }
 }
