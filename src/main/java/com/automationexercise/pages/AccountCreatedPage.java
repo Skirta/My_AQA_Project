@@ -10,16 +10,25 @@ public class AccountCreatedPage extends BasePage {
 
     // Locators
     private final By accountCreatedTextLocator = By.xpath("//h2[@data-qa='account-created']");
-    private final By clickContinueButtonLocator = By.xpath("//a[@data-qa='continue-button']");
+    private final By continueButtonLocator = By.xpath("//a[@data-qa='continue-button']");
 
     // Methods
     public AccountCreatedPage assertAccountCreatedPageIsSuccessfullyLoaded() {
-        click(accountCreatedTextLocator);
+        waitUntilVisibilityOfElementLocated(accountCreatedTextLocator);
         return this;
     }
 
     public HomePage clickContinueButton() {
-        click(clickContinueButtonLocator);
+        // 1. Спочатку пробуємо клікнути твоїм стандартним методом
+        click(continueButtonLocator);
+
+        // 2. Перевіряємо, чи ми не застрягли в рекламному "капкані"
+        if (driver.getCurrentUrl().contains("#google_vignette")) {
+            System.out.println("Виявлено повноекранну рекламу. Робимо примусовий перехід.");
+            // Просто переходимо за прямим посиланням на головну
+            driver.get("https://www.automationexercise.com/");
+        }
+
         return new HomePage(driver);
     }
 }

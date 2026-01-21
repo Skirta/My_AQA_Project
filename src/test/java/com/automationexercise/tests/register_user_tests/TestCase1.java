@@ -1,6 +1,5 @@
 package com.automationexercise.tests.register_user_tests;
 
-import com.automationexercise.components.MainMenu;
 import com.automationexercise.helpers.UserFactory;
 import com.automationexercise.models.UserRegistrationDetails;
 import com.automationexercise.pages.AccountCreatedPage;
@@ -12,11 +11,12 @@ import org.testng.annotations.Test;
 
 public class TestCase1 extends BaseTest {
 
-    @Test
-    public void testCase1() throws InterruptedException {
+    @Test //(invocationCount = 10, successPercentage = 100)
+    public void testCase1() {
         UserRegistrationDetails user = UserFactory.createNewUser();
 
-        new HomePage(driver)
+        HomePage homePage = new HomePage(driver);
+        homePage
                 .openHomePage()
                 .clickConsentButton()
                 .assertHomePageIsSuccessfullyLoaded();
@@ -54,8 +54,10 @@ public class TestCase1 extends BaseTest {
                 .assertAccountCreatedPageIsSuccessfullyLoaded()
                 .clickContinueButton();
 
-        new HomePage(driver)
-                .openHomePage()
+        homePage
+                .assertHomePageIsSuccessfullyLoaded()
+                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName());
+
 
     }
 }

@@ -25,6 +25,8 @@ public class DriverManager {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         options.addArguments("--disable-notifications");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--disable-extensions");
 
         // Твої налаштування prefs залишаємо тут
         Map<String, Object> prefs = new HashMap<>();

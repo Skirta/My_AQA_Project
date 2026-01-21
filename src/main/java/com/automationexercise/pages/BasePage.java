@@ -19,6 +19,10 @@ public abstract class BasePage {
         this.wait = new WebDriverWait(driver, defaultTimeout);
     }
 
+    public Boolean waitUntilUrlToBe(String url) {
+        return wait.until(ExpectedConditions.urlToBe(url));
+    }
+
     public WebElement waitUntilVisibilityOfElementLocated(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -40,11 +44,19 @@ public abstract class BasePage {
     }
 
     protected void click(By locator) {
-        waitUntilElementClickable(locator).click();
+        WebElement webElement = waitUntilElementClickable(locator);
+        removeAds();
+        try {
+            webElement.click();
+        } catch (Exception e) {
+            // Якщо звичайний клік не пройшов - JS клік "проб'є" оверлей
+            ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", webElement);
+        }
     }
 
     protected void type(By locator, String text) {
         WebElement element = waitUntilVisibilityOfElementLocated(locator);
+        removeAds();
         element.clear();
         element.sendKeys(text);
     }
@@ -57,12 +69,22 @@ public abstract class BasePage {
 
     public void removeAds() {
         try {
-            // Тут використовуємо швидкий вейтер на 2 секунди
-            new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.presenceOfElementLocated(By.className("adsbygoogle")));
-            // Тут буде твій JS код видалення
+            String script =
+                    // 1. Видаляємо нижній банер (твій попередній випадок)
+                    "var ads = document.querySelectorAll('ins.adsbygoogle, #aswift_0_host, #aswift_1_host, .adsbygoogle');" +
+                            "ads.forEach(function(ad) { ad.remove(); });" +
+
+                            // 2. Видаляємо повноекранний оверлей
+                            "var vignette = document.querySelector('#google_vignette');" +
+                            "if (vignette) { vignette.remove(); }" +
+
+                            // 3. ПРИМУСОВО повертаємо скрол (реклама його часто вимикає для всієї сторінки)
+                            "document.body.style.overflow = 'auto';" +
+                            "document.documentElement.style.overflow = 'auto';";
+
+            ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(script);
         } catch (Exception e) {
-            // Реклами немає — ігноруємо
+            // ігноруємо, якщо реклами немає
         }
     }
 }

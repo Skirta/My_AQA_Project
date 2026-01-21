@@ -3,6 +3,8 @@ package com.automationexercise.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
@@ -10,7 +12,9 @@ public class HomePage extends BasePage {
     }
 
     private final By cookieAggryButtonLocator = By.xpath("//button[@aria-label='Consent']");
-    protected final By logoLocator = By.xpath("//img[contains(@src,'logo.png')]");
+    private final By logoLocator = By.xpath("//img[contains(@src,'logo.png')]");
+    private final By loggedInAsButtonLocator = By.xpath("//a[contains(text(), 'Logged in as')]");
+
 
     public HomePage openHomePage() {
         driver.get("https://www.automationexercise.com/");
@@ -24,6 +28,15 @@ public class HomePage extends BasePage {
 
     public HomePage assertHomePageIsSuccessfullyLoaded() {
         waitUntilVisibilityOfElementLocated(logoLocator);
+        removeAds();
+        waitUntilUrlToBe("https://www.automationexercise.com/");
         return this;
     }
+
+    public HomePage assertUserNameIsDisplayed(String expectedName) {
+        String actualName = waitUntilVisibilityOfElementLocated(loggedInAsButtonLocator).getText();
+        assertThat(actualName).isEqualTo(expectedName);
+        return this;
+    }
+
 }
