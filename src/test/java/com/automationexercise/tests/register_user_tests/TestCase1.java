@@ -25,8 +25,8 @@ public class TestCase1 extends BaseTest {
 
         new LoginPage(driver)
                 .assertNewUserSignupTextsVisible()
-                .setName(user.getFirstName() + " " + user.getLastName())
-                .setEmail(user.getEmail())
+                .setNewUserName(user.getFirstName() + " " + user.getLastName())
+                .setNewUserEmail(user.getEmail())
                 .clickSignupButton();
 
         new CreateAccountPage(driver)
@@ -57,9 +57,10 @@ public class TestCase1 extends BaseTest {
                 .clickContinueButton();
 
         homePage
-                .assertHomePageIsSuccessfullyLoaded()
-                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName());
+                .assertHomePageIsSuccessfullyLoaded();
 
+        mainMenu
+                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName());
         mainMenu
                 .clickDeleteAccountButton()
                 .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")

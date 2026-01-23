@@ -27,6 +27,10 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public Boolean waitUntilInvisibilityOfElementLocated(By locator) {
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated((locator)));
+    }
+
     public Boolean waitUntilTextToBeInElement(By locator, String expectedText) {
         return new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
     }
