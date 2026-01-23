@@ -17,7 +17,7 @@ public class TestCase2 extends BaseTest {
         mainMenu.clickSignupLoginButton();
 
         new LoginPage(driver)
-                .assertLoginToYourAccountTextIsVisible()
+                .assertLoginToYourAccountTextIsVisible();
 
 
 

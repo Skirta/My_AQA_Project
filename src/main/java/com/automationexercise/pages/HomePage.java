@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.helpers.SecretManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,7 +18,7 @@ public class HomePage extends BasePage {
 
 
     public HomePage openHomePage() {
-        driver.get("https://www.automationexercise.com/");
+        driver.get(SecretManager.get("BASE_URL"));
         return this;
     }
 

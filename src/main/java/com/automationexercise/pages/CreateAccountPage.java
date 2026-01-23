@@ -23,8 +23,8 @@ public class CreateAccountPage extends BasePage {
     private final By dayDropdownLocator = By.id("days");
     private final By monthDropdownLocator = By.id("months");
     private final By yearDropdownLocator = By.id("years");
-    private final By newsletterCheckboxLocator = By.id("uniform-newsletter");
-    private final By specialOffersCheckboxLocator = By.id("uniform-optin");
+    private final By newsletterCheckboxLocator = By.id("newsletter");
+    private final By specialOffersCheckboxLocator = By.id("optin");
     private final By inputFirstNameLocator = By.id("first_name");
     private final By inputLastNameLocator = By.id("last_name");
     private final By inputCompanyLocator = By.id("company");
