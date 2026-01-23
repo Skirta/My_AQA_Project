@@ -24,7 +24,7 @@ public class TestCase1 extends BaseTest {
         mainMenu.clickSignupLoginButton();
 
         new LoginPage(driver)
-                .assertLoginPageIsSuccessfullyLoaded()
+                .assertNewUserSignupTextsVisible()
                 .setName(user.getFirstName() + " " + user.getLastName())
                 .setEmail(user.getEmail())
                 .clickSignupButton();
@@ -38,6 +38,8 @@ public class TestCase1 extends BaseTest {
                 .setDayOfBirth(user.getDayOfBirth())
                 .setMonthOfBirth(user.getMonthOfBirth())
                 .setYearOfBirth(user.getYearOfBirth())
+                .selectNewsletterCheckbox()
+                .selectSpecialOffersCheckbox()
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
                 .setCompany(user.getCompanyName())
@@ -60,6 +62,7 @@ public class TestCase1 extends BaseTest {
 
         mainMenu
                 .clickDeleteAccountButton()
-                .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!");
+                .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
+                .clickContinueButton();
     }
 }
