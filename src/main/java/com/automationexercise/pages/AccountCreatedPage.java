@@ -2,6 +2,7 @@ package com.automationexercise.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class AccountCreatedPage extends BasePage {
     public AccountCreatedPage(WebDriver driver) {
@@ -19,15 +20,11 @@ public class AccountCreatedPage extends BasePage {
     }
 
     public HomePage clickContinueButton() {
-        // 1. Спочатку пробуємо клікнути твоїм стандартним методом
-        click(continueButtonLocator);
+        WebElement button = waitUntilElementClickable(continueButtonLocator);
+        removeAds(); // Твій метод, що видаляє фрейми
 
-        // 2. Перевіряємо, чи ми не застрягли в рекламному "капкані"
-        if (driver.getCurrentUrl().contains("#google_vignette")) {
-            System.out.println("Виявлено повноекранну рекламу. Робимо примусовий перехід.");
-            // Просто переходимо за прямим посиланням на головну
-            driver.get("https://www.automationexercise.com/");
-        }
+        // Тиснемо на кнопку "силою" скрипта, ігноруючи шар реклами зверху
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
 
         return new HomePage(driver);
     }

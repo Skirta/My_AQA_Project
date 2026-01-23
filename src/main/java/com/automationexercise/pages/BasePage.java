@@ -46,12 +46,7 @@ public abstract class BasePage {
     protected void click(By locator) {
         WebElement webElement = waitUntilElementClickable(locator);
         removeAds();
-        try {
-            webElement.click();
-        } catch (Exception e) {
-            // Якщо звичайний клік не пройшов - JS клік "проб'є" оверлей
-            ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", webElement);
-        }
+        webElement.click();
     }
 
     protected void type(By locator, String text) {

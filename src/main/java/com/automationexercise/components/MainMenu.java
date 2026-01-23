@@ -20,6 +20,7 @@ public class MainMenu extends BasePage {
     private final By apiTestingButtonLocator = By.xpath("//a[@href='/api_list']");
     private final By contactUsButtonLocator = By.xpath("//a[@href='/contact_us']");
     private final By loggedInAsButtonLocator = By.xpath("//i[contains(@class,'fa-user')]/parent::a");
+    private final By deleteButtonLocator = By.xpath("//a[@href='/delete_account']");
 
     // Methods
 
@@ -58,8 +59,8 @@ public class MainMenu extends BasePage {
         return new ContactUsPage(driver);
     }
 
-    public HomePage assertUserNameIsVisible(String expectedUserName) {
-        waitUntilTextToBeInElement(loggedInAsButtonLocator, expectedUserName);
-        return new HomePage(driver);
+    public DeleteAccountPage clickDeleteAccountButton() {
+        click(deleteButtonLocator);
+        return new DeleteAccountPage(driver);
     }
 }

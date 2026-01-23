@@ -58,6 +58,8 @@ public class TestCase1 extends BaseTest {
                 .assertHomePageIsSuccessfullyLoaded()
                 .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName());
 
-
+        mainMenu
+                .clickDeleteAccountButton()
+                .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!");
     }
 }
