@@ -1,4 +1,4 @@
-package com.automationexercise.tests.register_user_tests;
+package com.automationexercise.tests.login_user_tests;
 
 import com.automationexercise.helpers.SecretManager;
 import com.automationexercise.pages.HomePage;
