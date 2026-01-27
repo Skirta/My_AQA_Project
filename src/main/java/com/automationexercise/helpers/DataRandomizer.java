@@ -77,4 +77,13 @@ public class DataRandomizer {
         String formattedData = localDate.format(formatter);
         return formattedData.split(" ");
     }
+
+    public static String getRandomSubject() {
+        return faker.lorem().sentence();
+    }
+
+    public static String getRandomMessage() {
+        return faker.lorem().paragraph();
+    }
+
 }
