@@ -17,7 +17,8 @@ public class LoginPage extends BasePage{
     private final By loginButtonLocator = By.xpath("//button[@data-qa='login-button']");
     private final By newUserSignupTextLocator = By.xpath("//h2[text()='New User Signup!']");
     private final By loginToYourAccountTextLocator = By.xpath("//h2[text()='Login to your account']");
-        private final By errorIncorrectEmailOrPasswordTextLocator = By.xpath("//p[text()='Your email or password is incorrect!']");
+    private final By errorIncorrectEmailOrPasswordTextLocator = By.xpath("//p[text()='Your email or password is incorrect!']");
+    private final By errorEmailAddressAlreadyExistTextLocator = By.xpath("//p[text()='Email Address already exist!']");
 
     //Mothods
     public LoginPage setNewUserName(String name) {
@@ -52,6 +53,11 @@ public class LoginPage extends BasePage{
 
     public LoginPage assertErrorIncorrectEmailOrPasswordIsVisible() {
         waitUntilVisibilityOfElementLocated(errorIncorrectEmailOrPasswordTextLocator);
+        return this;
+    }
+
+    public LoginPage assertErrorEmailAddressAlreadyExistIsVisible() {
+        waitUntilVisibilityOfElementLocated(errorEmailAddressAlreadyExistTextLocator);
         return this;
     }
 

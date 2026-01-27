@@ -20,6 +20,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    //TODO - name of cookie "FCCDCF"... try to add it when browser starts
     public HomePage clickConsentButton(){
         click(cookieAggryButtonLocator);
         return this;
