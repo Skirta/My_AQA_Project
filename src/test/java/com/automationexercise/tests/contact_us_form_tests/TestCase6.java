@@ -17,14 +17,21 @@ public class TestCase6 extends BaseTest {
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu
-                .clickContactUsButton();
-
-        new ContactUsPage(driver)
+                .clickContactUsButton()
                 .assertGetInTouchTextIsVisible()
                 .setEmail(DataRandomizer.getRandomEmail())
                 .setName(DataRandomizer.getRandomFirstName())
                 .setSubject(DataRandomizer.getRandomSubject())
-                .setMessage(DataRandomizer.getRandomMessage());
+                .setMessage(DataRandomizer.getRandomMessage())
+                .uploadFile()
+                .clickSubmitButton()
+                .clickAcceptButtonInAlert();
 
+        new ContactUsPage(driver)
+                .assertMessageAboutSuccessDownloadIsPresent()
+                .clickHomeButton();
+
+        new HomePage(driver)
+                .assertHomePageIsSuccessfullyLoaded();
     }
 }

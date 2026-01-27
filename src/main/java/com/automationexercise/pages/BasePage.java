@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public abstract class BasePage {
@@ -43,7 +44,7 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    public WebElement find (By locator) {
+    public WebElement find(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -85,5 +86,9 @@ public abstract class BasePage {
         } catch (Exception e) {
             // ігноруємо, якщо реклами немає
         }
+    }
+
+    public void clickAcceptButtonInAlert() {
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
     }
 }
