@@ -23,7 +23,8 @@ public class TestCase4 extends BaseTest {
 
         mainMenu
                 .assertUserNameIsDisplayed("Logged in as " + SecretManager.get("USER_NAME"))
-                .clickLogoutButton();
+                .clickLogoutButton()
+                .assertLoginToYourAccountTextIsVisible();
 
         mainMenu.assertUserNameIsNotDisplayed();
     }
