@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class BasePage {
     protected WebDriver driver;
@@ -42,6 +43,10 @@ public abstract class BasePage {
 
     public WebElement waitUntilElementClickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public List<WebElement> waitUntilNumberOfElementsToBeMoreThan(By locator, int value) {
+       return wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, value));
     }
 
     public WebElement find(By locator) {
