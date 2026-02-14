@@ -28,14 +28,13 @@ public class DriverManager {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-extensions");
 
-        // Твої налаштування prefs залишаємо тут
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("autofill.profile_enabled", false);
         prefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
 
         if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
+            options.addArguments("--headless"); // запуск тестів без запуску браузера
             options.addArguments("--window-size=1920,1080");
         }
 
