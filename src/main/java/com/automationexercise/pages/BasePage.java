@@ -25,6 +25,10 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.urlToBe(url));
     }
 
+    public Boolean waitUntilUrlContains(String url) {
+        return wait.until(ExpectedConditions.urlContains(url));
+    }
+
     public WebElement waitUntilVisibilityOfElementLocated(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -46,7 +50,7 @@ public abstract class BasePage {
     }
 
     public List<WebElement> waitUntilNumberOfElementsToBeMoreThan(By locator, int value) {
-       return wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, value));
+        return wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, value));
     }
 
     public WebElement find(By locator) {
@@ -55,15 +59,19 @@ public abstract class BasePage {
 
     protected void click(By locator) {
         WebElement webElement = waitUntilElementClickable(locator);
+        click(webElement);
+    }
+
+    protected void click(WebElement webElement) {
         removeAds();
         webElement.click();
     }
 
     protected void type(By locator, String text) {
-        WebElement element = waitUntilVisibilityOfElementLocated(locator);
+        WebElement webElement = waitUntilVisibilityOfElementLocated(locator);
         removeAds();
-        element.clear();
-        element.sendKeys(text);
+        webElement.clear();
+        webElement.sendKeys(text);
     }
 
     protected void selectByVisibleText(By locator, String text) {
@@ -75,22 +83,20 @@ public abstract class BasePage {
     public void removeAds() {
         try {
             String script =
-                    // 1. Видаляємо нижній банер (твій попередній випадок)
                     "var ads = document.querySelectorAll('ins.adsbygoogle, #aswift_0_host, #aswift_1_host, .adsbygoogle');" +
                             "ads.forEach(function(ad) { ad.remove(); });" +
 
-                            // 2. Видаляємо повноекранний оверлей
                             "var vignette = document.querySelector('#google_vignette');" +
                             "if (vignette) { vignette.remove(); }" +
 
-                            // 3. ПРИМУСОВО повертаємо скрол (реклама його часто вимикає для всієї сторінки)
+                            "var overlays = document.querySelectorAll('span[style*=\"blue\"], a[href*=\"v-neck\"]');" +
+                            "overlays.forEach(function(o) { o.remove(); });" +
+
                             "document.body.style.overflow = 'auto';" +
                             "document.documentElement.style.overflow = 'auto';";
 
             ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(script);
-        } catch (Exception e) {
-            // ігноруємо, якщо реклами немає
-        }
+        } catch (Exception e) { }
     }
 
     public void clickAcceptButtonInAlert() {

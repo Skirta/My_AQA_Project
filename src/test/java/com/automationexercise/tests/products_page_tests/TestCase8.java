@@ -17,8 +17,10 @@ public class TestCase8 extends BaseTest {
         mainMenu
                 .clickProductsButton()
                 .assertProductsPageIsSuccessfullyLoaded()
-                .assertProductsMoreThan(0);
-
+                .assertProductsMoreThan(0)
+                .chooseRandomProductAndClickViewButton()
+                .assertThatProductDetailsPageIsSuccessfullyLoaded()
+                .assertThatNameAndPriceOfRandomProductCorrespond();
 
     }
 }
