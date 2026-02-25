@@ -1,0 +1,7 @@
+<suite name="Full Suite">
+    <test name="All Tests">
+        <packages>
+            <package name="com.automationexercise.tests.*" />
+        </packages>
+    </test>
+</suite>
