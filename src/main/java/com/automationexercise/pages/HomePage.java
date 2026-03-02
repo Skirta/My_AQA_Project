@@ -26,10 +26,12 @@ public class HomePage extends BasePage {
     //Methods
     public HomePage openHomePage() {
         driver.get(SecretManager.get("BASE_URL"));
+        if (!driver.findElements(cookieAggryButtonLocator).isEmpty()){
+            clickConsentButton();
+        }
         return this;
     }
 
-    //TODO - name of cookie "FCCDCF"... try to add it when browser starts
     public HomePage clickConsentButton() {
         click(cookieAggryButtonLocator);
         return this;

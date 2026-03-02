@@ -11,7 +11,6 @@ public class TestCase4 extends BaseTest {
     public void testCase4(){
         new HomePage(driver)
                 .openHomePage()
-                .clickConsentButton()
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu

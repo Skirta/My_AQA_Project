@@ -11,7 +11,6 @@ public class TestCase10 extends BaseTest {
 
        new HomePage(driver)
                .openHomePage()
-               .clickConsentButton()
                .assertHomePageIsSuccessfullyLoaded()
                .scrollDownPageToFooter()
                .assertSubscriptionTextInFooterIsDisplayed()

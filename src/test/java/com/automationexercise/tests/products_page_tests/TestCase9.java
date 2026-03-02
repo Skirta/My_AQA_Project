@@ -11,7 +11,6 @@ public class TestCase9 extends BaseTest {
     public void testCase9 () {
         new HomePage(driver)
                 .openHomePage()
-                .clickConsentButton()
                 .assertHomePageIsSuccessfullyLoaded();
         ProductsPage productsPage = mainMenu
                 .clickProductsButton()

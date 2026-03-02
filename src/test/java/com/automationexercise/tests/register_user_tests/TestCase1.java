@@ -18,7 +18,6 @@ public class TestCase1 extends BaseTest {
         HomePage homePage = new HomePage(driver);
         homePage
                 .openHomePage()
-                .clickConsentButton()
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu.clickSignupLoginButton();

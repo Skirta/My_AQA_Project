@@ -13,7 +13,6 @@ public class TestCase6 extends BaseTest {
 
         new HomePage(driver)
                 .openHomePage()
-                .clickConsentButton()
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu
