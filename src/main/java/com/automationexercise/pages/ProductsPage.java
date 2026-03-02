@@ -56,17 +56,14 @@ public class ProductsPage extends BasePage {
         return new ProductDetailsPage(driver, choosenProduct);
     }
 
-    public List<ProductModel> getAllProductsNames() {
+    public List<String> getAllProductsNames() {
         removeAds();
         waitUntilVisibilityOfElementLocated(productContainerLocator);
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
-        List<ProductModel> productList = new ArrayList<>();
+        List<String> productList = new ArrayList<>();
         for (WebElement container : productContainer) {
             String name = container.findElement(relativeNameLocator).getText();
-            ProductModel names = ProductModel.builder()
-                    .name(name)
-                    .build();
-            productList.add(names);
+            productList.add(name);
         }
         return productList;
     }
@@ -89,9 +86,9 @@ public class ProductsPage extends BasePage {
     }
 
     public String getRandomProductName() {
-        List<ProductModel> allProductsNames = getAllProductsNames();
+        List<String> allProductsNames = getAllProductsNames();
         int randomProductNumber = new Random().nextInt(allProductsNames.size());
-        return allProductsNames.get(randomProductNumber).getName();
+        return allProductsNames.get(randomProductNumber);
     }
 
     public ProductsPage inputRandomProductNameToSearchBox(String text) {
@@ -110,10 +107,10 @@ public class ProductsPage extends BasePage {
     }
 
     public ProductsPage assertOnlyRelatedProductsAreVisible(String expectedName) {
-        List<ProductModel> allProductsNames = getAllProductsNames();
-        for (ProductModel actualProductName : allProductsNames) {
-            assertThat(actualProductName.getName())
-                    .as("Search validation for:" + expectedName)
+        List<String> allProductsNames = getAllProductsNames();
+        for (String actualProductName : allProductsNames) {
+            assertThat(actualProductName)
+                    .as("Search validation for: " + expectedName)
                     .contains(expectedName);
         }
         return this;
