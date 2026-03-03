@@ -40,7 +40,7 @@ public class HomePage extends BasePage {
     public HomePage assertHomePageIsSuccessfullyLoaded() {
         waitUntilVisibilityOfElementLocated(logoLocator);
         removeAds();
-        waitUntilUrlToBe("https://www.automationexercise.com/");
+        waitUntilUrlToBe(SecretManager.get("BASE_URL"));
         return this;
     }
 

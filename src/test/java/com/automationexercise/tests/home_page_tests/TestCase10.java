@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class TestCase10 extends BaseTest {
 
-    @Test
+    @Test //(invocationCount = 10, successPercentage = 100)
     public void testCase10() {
 
        new HomePage(driver)

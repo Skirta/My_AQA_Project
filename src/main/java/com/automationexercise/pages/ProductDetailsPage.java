@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.helpers.SecretManager;
 import com.automationexercise.models.ProductModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +33,7 @@ public class ProductDetailsPage extends BasePage {
             driver.get(cleanUrl);
         }
 
-        waitUntilUrlContains("https://www.automationexercise.com/product_details/");
+        waitUntilUrlContains(SecretManager.get("BASE_URL") + "product_details/");
         return this;
     }
 
