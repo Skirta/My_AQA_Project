@@ -1,4 +1,4 @@
-package com.automationexercise.tests.contact_us_form_tests;
+package com.automationexercise.tests.contactUs;
 
 import com.automationexercise.helpers.DataRandomizer;
 import com.automationexercise.pages.ContactUsPage;
@@ -6,10 +6,10 @@ import com.automationexercise.pages.HomePage;
 import com.automationexercise.tests.BaseTest;
 import org.testng.annotations.Test;
 
-public class TestCase6 extends BaseTest {
+public class ContactUsTests extends BaseTest {
 
-    @Test
-    public void testCase6() {
+    @Test(description = "Test Case 6: Contact Us Form")
+    public void shouldSubmitContactUsFormSuccessfully() {
 
         new HomePage(driver)
                 .openHomePage()
