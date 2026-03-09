@@ -1,6 +1,7 @@
 package com.automationexercise.tests.products;
 
 import com.automationexercise.pages.HomePage;
+import com.automationexercise.pages.LoginPage;
 import com.automationexercise.pages.ProductsPage;
 import com.automationexercise.tests.BaseTest;
 import org.testng.annotations.Test;
@@ -40,5 +41,18 @@ public class ProductTests extends BaseTest {
                 .assertSearchedProductsTextIsVisible()
                 .assertProductsMoreThan(0)
                 .assertOnlyRelatedProductsAreVisible(randomProductName);
+    }
+
+    @Test(description = "Test Case 12: Add Products in Cart",
+        invocationCount = 10, successPercentage = 100)
+    public void shouldAddProductToCart() {
+
+        new HomePage(driver)
+                .openHomePage()
+                .assertHomePageIsSuccessfullyLoaded();
+        mainMenu
+                .clickProductsButton()
+                .chooseRandomProductAndClickAddToCartButton();
+
     }
 }

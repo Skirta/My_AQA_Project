@@ -4,6 +4,7 @@ import com.automationexercise.models.ProductModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductsPage extends BasePage {
 
-    public ProductsPage(WebDriver driver, ProductModel choosenProductName, WebElement randomProduct) {
-        super(driver);
+    // змінна для збереження останнього вибраного продукту
+    private ProductModel lastSelectedProduct;
+
+    public ProductModel getLastSelectedProduct() {
+        return lastSelectedProduct;
     }
 
     public ProductsPage(WebDriver driver) {
@@ -31,6 +35,7 @@ public class ProductsPage extends BasePage {
     private final By searchInputLocator = By.id("search_product");
     private final By searchButtonLocator = By.id("submit_search");
     private final By searchedProductTextLocator = By.xpath("//h2[@class='title text-center']");
+    private final By relativeAddToCartButtonLocator = By.xpath(".//a[@class='btn btn-default add-to-cart']");
 
 
     //Methods
@@ -113,6 +118,20 @@ public class ProductsPage extends BasePage {
                     .as("Search validation for: " + expectedName)
                     .contains(expectedName);
         }
+        return this;
+    }
+
+    public ProductsPage chooseRandomProductAndClickAddToCartButton() {
+        List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
+        List<WebElement> productContainer = driver.findElements(productContainerLocator);
+        int randomProductNumber = new Random().nextInt(allProductsNamesAndPrices.size());
+        this.lastSelectedProduct = allProductsNamesAndPrices.get(randomProductNumber);
+        WebElement targetConatainer = productContainer.get(randomProductNumber);
+        new Actions(driver)
+                .moveToElement(targetConatainer)
+                .perform();
+        removeAds();
+        waitUntilElementClickable(targetConatainer.findElement(relativeAddToCartButtonLocator)).click();
         return this;
     }
 }

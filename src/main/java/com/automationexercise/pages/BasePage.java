@@ -1,6 +1,7 @@
 package com.automationexercise.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,6 +50,10 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    public WebElement waitUntilElementClickable(WebElement webElement) {
+        return wait.until(ExpectedConditions.elementToBeClickable(webElement));
+    }
+
     public List<WebElement> waitUntilNumberOfElementsToBeMoreThan(By locator, int value) {
         return wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, value));
     }
@@ -83,20 +88,24 @@ public abstract class BasePage {
     public void removeAds() {
         try {
             String script =
-                    "var ads = document.querySelectorAll('ins.adsbygoogle, #aswift_0_host, #aswift_1_host, .adsbygoogle');" +
+                    // 1. Видаляємо всі елементи, що містять атрибути віньєтки або interstitial
+                    "var googleVignettes = document.querySelectorAll('[data-google-vignette], [data-google-interstitial], .google-ads-interstitial, #google_vignette');" +
+                            "googleVignettes.forEach(function(el) { el.remove(); });" +
+
+                            // 2. Видаляємо стандартні хости реклами (як у тебе було, але розширено)
+                            "var ads = document.querySelectorAll('ins.adsbygoogle, [id^=\"aswift_\"], .adsbygoogle');" +
                             "ads.forEach(function(ad) { ad.remove(); });" +
 
-                            "var vignette = document.querySelector('#google_vignette');" +
-                            "if (vignette) { vignette.remove(); }" +
-
-                            "var overlays = document.querySelectorAll('span[style*=\"blue\"], a[href*=\"v-neck\"]');" +
-                            "overlays.forEach(function(o) { o.remove(); });" +
-
-                            "document.body.style.overflow = 'auto';" +
-                            "document.documentElement.style.overflow = 'auto';";
+                            // 3. ПРИМУСОВО розблоковуємо скрол та взаємодію з body
+                            // Google Ads часто вішає 'overflow: hidden' на <html> або <body>, щоб юзер не міг скролити повз рекламу
+                            "var styleFix = 'overflow: auto !important; position: static !important; user-select: auto !important; pointer-events: auto !important;';" +
+                            "document.body.setAttribute('style', styleFix);" +
+                            "document.documentElement.setAttribute('style', styleFix);";
 
             ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(script);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            // Логування помилки, якщо потрібно
+        }
     }
 
     public void clickAcceptButtonInAlert() {
