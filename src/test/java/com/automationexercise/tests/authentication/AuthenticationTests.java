@@ -15,9 +15,7 @@ public class AuthenticationTests extends BaseTest {
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu
-                .clickSignupLoginButton();
-
-        new LoginPage(driver)
+                .clickSignupLoginButton()
                 .assertLoginToYourAccountTextIsVisible()
                 .setOldUserEmail(SecretManager.get("USER_EMAIL"))
                 .setOldUserPassword(SecretManager.get("USER_PASSWORD"))

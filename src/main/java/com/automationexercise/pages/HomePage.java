@@ -4,9 +4,6 @@ import com.automationexercise.helpers.SecretManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import javax.swing.*;
-
-
 public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {

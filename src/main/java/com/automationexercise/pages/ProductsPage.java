@@ -49,6 +49,7 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    // TODO: refactor this and chooseRandomProductAndClickAddToCartButton() method
     public ProductDetailsPage chooseRandomProductAndClickViewButton() {
         List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
@@ -121,6 +122,7 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    // TODO: refactor this and chooseRandomProductAndClickViewButton() method
     public ProductsPage chooseRandomProductAndClickAddToCartButton() {
         List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
