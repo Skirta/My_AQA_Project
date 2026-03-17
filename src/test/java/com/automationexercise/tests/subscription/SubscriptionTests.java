@@ -13,7 +13,7 @@ public class SubscriptionTests extends BaseTest {
         new HomePage(driver)
                 .openHomePage()
                 .assertHomePageIsSuccessfullyLoaded();
-        new Footer(driver)
+        footer
                 .scrollDownPageToFooter()
                 .assertSubscriptionTextInFooterIsDisplayed()
                 .enterEmailAndClickSubscribeButton()
@@ -29,7 +29,7 @@ public class SubscriptionTests extends BaseTest {
         mainMenu
                 .clickCartButton()
                 .assertCartPageIsSuccessfullyLoaded();
-        new Footer(driver)
+        footer
                 .scrollDownPageToFooter()
                 .assertSubscriptionTextInFooterIsDisplayed()
                 .enterEmailAndClickSubscribeButton()
