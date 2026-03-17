@@ -1,6 +1,8 @@
 package com.automationexercise.pages;
 
 import com.automationexercise.models.ProductModel;
+import lombok.Builder;
+import lombok.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,19 +49,6 @@ public class ProductsPage extends BasePage {
     public ProductsPage assertProductsMoreThan(int numberOfProducts) {
         waitUntilNumberOfElementsToBeMoreThan(productContainerLocator, numberOfProducts);
         return this;
-    }
-
-    // TODO: refactor this and chooseRandomProductAndClickAddToCartButton() method
-    public ProductDetailsPage chooseRandomProductAndClickViewButton() {
-        List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
-        List<WebElement> productContainer = driver.findElements(productContainerLocator);
-        int randomProductNumber = new Random().nextInt(allProductsNamesAndPrices.size());
-        ProductModel choosenProduct = allProductsNamesAndPrices.get(randomProductNumber);
-        WebElement targetConatainer = productContainer.get(randomProductNumber);
-
-        String url = targetConatainer.findElement(relativeViewButtonLocator).getAttribute("href");
-        driver.get(url);
-        return new ProductDetailsPage(driver, choosenProduct);
     }
 
     public List<String> getAllProductsNames() {
@@ -122,18 +111,38 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
-    // TODO: refactor this and chooseRandomProductAndClickViewButton() method
-    public ProductsPage chooseRandomProductAndClickAddToCartButton() {
+    private RandomProduct getRandomProduct() {
         List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
         int randomProductNumber = new Random().nextInt(allProductsNamesAndPrices.size());
-        this.lastSelectedProduct = allProductsNamesAndPrices.get(randomProductNumber);
-        WebElement targetConatainer = productContainer.get(randomProductNumber);
+        return RandomProduct.builder()
+                .productModel(allProductsNamesAndPrices.get(randomProductNumber))
+                .webElement(productContainer.get(randomProductNumber))
+                .build();
+    }
+
+    public ProductsPage chooseRandomProductAndClickAddToCartButton() {
+        RandomProduct randomProduct = getRandomProduct();
+        this.lastSelectedProduct = randomProduct.productModel;
         new Actions(driver)
-                .moveToElement(targetConatainer)
+                .moveToElement(randomProduct.webElement)
                 .perform();
         removeAds();
-        waitUntilElementClickable(targetConatainer.findElement(relativeAddToCartButtonLocator)).click();
+        waitUntilElementClickable(randomProduct.webElement.findElement(relativeAddToCartButtonLocator)).click();
         return this;
+    }
+
+    public ProductDetailsPage chooseRandomProductAndClickViewButton() {
+        RandomProduct randomProduct = getRandomProduct();
+        String url = randomProduct.webElement.findElement(relativeViewButtonLocator).getAttribute("href");
+        driver.get(url);
+        return new ProductDetailsPage(driver, randomProduct.productModel);
+    }
+
+    @Builder
+    @Data
+    private static class RandomProduct {
+        private ProductModel productModel;
+        private WebElement webElement;
     }
 }
