@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductsPage extends BasePage {
 
-    // змінна для збереження останнього вибраного продукту
-    private ProductModel lastSelectedProduct;
+    // колекція для збереження вибраних продуктів
+    private List<ProductModel> productsList = new ArrayList<>();
 
-    public ProductModel getLastSelectedProduct() {
-        return lastSelectedProduct;
+    public List<ProductModel> getProductsList() {
+        return productsList;
     }
 
     public ProductsPage(WebDriver driver) {
@@ -33,12 +33,10 @@ public class ProductsPage extends BasePage {
     private final By relativeViewButtonLocator = By.xpath(".//div[@class='choose']//a");
     private final By allProductsTextLocator = By.xpath("//h2[text()='All Products']");
     private final By productContainerLocator = By.xpath("//div[@class='col-sm-4']//div[@class='product-image-wrapper']");
-    private final By viewButtonsLocator = By.xpath("//a[contains(@href, '/product_details/')]");
     private final By searchInputLocator = By.id("search_product");
     private final By searchButtonLocator = By.id("submit_search");
     private final By searchedProductTextLocator = By.xpath("//h2[@class='title text-center']");
     private final By relativeAddToCartButtonLocator = By.xpath(".//a[@class='btn btn-default add-to-cart']");
-
 
     //Methods
     public ProductsPage assertProductsPageIsSuccessfullyLoaded() {
@@ -112,18 +110,22 @@ public class ProductsPage extends BasePage {
     }
 
     private RandomProduct getRandomProduct() {
+        Random random = new Random();
         List<ProductModel> allProductsNamesAndPrices = getAllProductsNamesAndPrices();
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
-        int randomProductNumber = new Random().nextInt(allProductsNamesAndPrices.size());
+        int randomProductNumber = random.nextInt(allProductsNamesAndPrices.size());
+            while(!productsList.isEmpty() && productsList.contains(allProductsNamesAndPrices.get(randomProductNumber))){
+                randomProductNumber = random.nextInt(allProductsNamesAndPrices.size());
+            }
         return RandomProduct.builder()
                 .productModel(allProductsNamesAndPrices.get(randomProductNumber))
                 .webElement(productContainer.get(randomProductNumber))
                 .build();
     }
 
-    public ProductsPage chooseRandomProductAndClickAddToCartButton() {
+    public ProductsPage addRandomProductToCart() {
         RandomProduct randomProduct = getRandomProduct();
-        this.lastSelectedProduct = randomProduct.productModel;
+        this.productsList.add(randomProduct.productModel);
         new Actions(driver)
                 .moveToElement(randomProduct.webElement)
                 .perform();
