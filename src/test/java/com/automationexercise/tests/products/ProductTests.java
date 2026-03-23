@@ -77,7 +77,12 @@ public class ProductTests extends BaseTest {
         mainMenu
                 .clickProductsButton()
                 .chooseRandomProductAndClickViewButton()
-                .assertThatProductDetailsPageIsSuccessfullyLoaded();
-
+                .assertThatProductDetailsPageIsSuccessfullyLoaded()
+                .changeQuantity("4")
+                .clickAddToCartButton();
+        new CartModal(driver)
+                .clickViewCartButton()
+                .assertCartPageIsSuccessfullyLoaded()
+                .assertCorrectQuantity("4");
     }
 }

@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProductDetailsPage extends BasePage {
+    public class ProductDetailsPage extends BasePage {
     private final ProductModel choosenProduct;
 
     public ProductDetailsPage(WebDriver driver, ProductModel choosenProduct) {
@@ -18,6 +18,8 @@ public class ProductDetailsPage extends BasePage {
     //Locators
     private final By productNameLocator = By.xpath("//div[@class='product-details']//h2");
     private final By productPriceLocator = By.xpath("//div[@class='product-details']//span/span");
+    private final By productQuantityLocator = By.id("quantity");
+    private final By addToCartButtonLocator = By.xpath("//button[@class='btn btn-default cart']");
 
 
     //Methods
@@ -43,6 +45,16 @@ public class ProductDetailsPage extends BasePage {
 
         assertThat(actualProductName).isEqualTo(choosenProduct.getName());
         assertThat(actualProductPrice).isEqualTo(choosenProduct.getPrice());
+        return this;
+    }
+
+    public ProductDetailsPage changeQuantity(String quantity) {
+        type(productQuantityLocator, quantity);
+        return this;
+    }
+
+    public ProductDetailsPage clickAddToCartButton() {
+        waitUntilElementClickable(addToCartButtonLocator).click();
         return this;
     }
 }
