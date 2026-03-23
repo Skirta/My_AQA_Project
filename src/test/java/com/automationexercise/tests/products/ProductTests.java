@@ -1,6 +1,7 @@
 package com.automationexercise.tests.products;
 
 import com.automationexercise.components.CartModal;
+import com.automationexercise.pages.CartPage;
 import com.automationexercise.pages.HomePage;
 import com.automationexercise.pages.ProductsPage;
 import com.automationexercise.tests.BaseTest;
@@ -43,8 +44,8 @@ public class ProductTests extends BaseTest {
                 .assertOnlyRelatedProductsAreVisible(randomProductName);
     }
 
-    @Test(description = "Test Case 12: Add Products in Cart")
-//        invocationCount = 10, successPercentage = 100)
+    @Test(description = "Test Case 12: Add Products in Cart",
+        invocationCount = 10, successPercentage = 100)
     public void shouldAddProductToCart() {
 
         new HomePage(driver)
@@ -62,5 +63,8 @@ public class ProductTests extends BaseTest {
         cartModal
                 .assertAddedModalIsSuccessfullyLoaded()
                 .clickViewCartButton();
+        new CartPage(driver, productsPage.getProductsList())
+                .assertCartPageIsSuccessfullyLoaded()
+                .assertAllProductAddedToCart();
     }
 }

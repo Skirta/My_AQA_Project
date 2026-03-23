@@ -96,7 +96,11 @@ public abstract class BasePage {
                             "var ads = document.querySelectorAll('ins.adsbygoogle, [id^=\"aswift_\"], .adsbygoogle');" +
                             "ads.forEach(function(ad) { ad.remove(); });" +
 
-                            // 3. ПРИМУСОВО розблоковуємо скрол та взаємодію з body
+                            // 3. Видаляємо Google Shopping annotations
+                            "var annoSa = document.getElementById('google-anno-sa');" +
+                            "if (annoSa) { annoSa.remove(); }" +
+
+                            // 4. ПРИМУСОВО розблоковуємо скрол та взаємодію з body
                             // Google Ads часто вішає 'overflow: hidden' на <html> або <body>, щоб юзер не міг скролити повз рекламу
                             "var styleFix = 'overflow: auto !important; position: static !important; user-select: auto !important; pointer-events: auto !important;';" +
                             "document.body.setAttribute('style', styleFix);" +

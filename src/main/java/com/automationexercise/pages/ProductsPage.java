@@ -28,6 +28,7 @@ public class ProductsPage extends BasePage {
     }
 
     //Locators
+    private final By relativeIdLocator = By.xpath(".//div[@class='productinfo text-center']/a");
     private final By relativeNameLocator = By.xpath(".//div[@class='productinfo text-center']//p");
     private final By relativePriceLocator = By.xpath(".//div[@class='productinfo text-center']//h2");
     private final By relativeViewButtonLocator = By.xpath(".//div[@class='choose']//a");
@@ -36,7 +37,7 @@ public class ProductsPage extends BasePage {
     private final By searchInputLocator = By.id("search_product");
     private final By searchButtonLocator = By.id("submit_search");
     private final By searchedProductTextLocator = By.xpath("//h2[@class='title text-center']");
-    private final By relativeAddToCartButtonLocator = By.xpath(".//a[@class='btn btn-default add-to-cart']");
+    private final By relativeAddToCartButtonLocator = By.xpath(".//*[@class='product-overlay']//a[@class='btn btn-default add-to-cart']");
 
     //Methods
     public ProductsPage assertProductsPageIsSuccessfullyLoaded() {
@@ -67,9 +68,11 @@ public class ProductsPage extends BasePage {
         List<WebElement> productContainer = driver.findElements(productContainerLocator);
         List<ProductModel> productList = new ArrayList<>();
         for (WebElement container : productContainer) {
+            String id = container.findElement(relativeIdLocator).getAttribute("data-product-id");
             String name = container.findElement(relativeNameLocator).getText();
             String price = container.findElement(relativePriceLocator).getText();
             ProductModel names = ProductModel.builder()
+                    .id(id)
                     .name(name)
                     .price(price)
                     .build();
@@ -124,6 +127,7 @@ public class ProductsPage extends BasePage {
     }
 
     public ProductsPage addRandomProductToCart() {
+        removeAds();
         RandomProduct randomProduct = getRandomProduct();
         this.productsList.add(randomProduct.productModel);
         new Actions(driver)
