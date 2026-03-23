@@ -45,7 +45,7 @@ public class ProductTests extends BaseTest {
     }
 
     @Test(description = "Test Case 12: Add Products in Cart",
-        invocationCount = 10, successPercentage = 100)
+            invocationCount = 10, successPercentage = 100)
     public void shouldAddProductToCart() {
 
         new HomePage(driver)
@@ -66,5 +66,18 @@ public class ProductTests extends BaseTest {
         new CartPage(driver, productsPage.getProductsList())
                 .assertCartPageIsSuccessfullyLoaded()
                 .assertAllProductAddedToCart();
+    }
+
+    @Test(description = "Test Case 13: Verify Product Quantity in Cart")
+    public void shouldVerifyProductQuantityInCart() {
+
+        new HomePage(driver)
+                .openHomePage()
+                .assertHomePageIsSuccessfullyLoaded();
+        mainMenu
+                .clickProductsButton()
+                .chooseRandomProductAndClickViewButton()
+                .assertThatProductDetailsPageIsSuccessfullyLoaded();
+
     }
 }
