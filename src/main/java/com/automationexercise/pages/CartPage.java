@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.components.CheckoutModal;
 import com.automationexercise.helpers.SecretManager;
 import com.automationexercise.models.ProductModel;
 import org.openqa.selenium.By;
@@ -78,8 +79,8 @@ public class CartPage extends BasePage {
         return this;
     }
 
-    public CheckoutPage clickProceedToCheckoutButton() {
+    public CheckoutModal clickProceedToCheckoutAsGuest() {
         click(proceedToCheckoutButtonLocator);
-        return new CheckoutPage();
+        return new CheckoutModal(driver);
     }
 }
