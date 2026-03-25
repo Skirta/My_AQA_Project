@@ -83,4 +83,10 @@ public class CartPage extends BasePage {
         click(proceedToCheckoutButtonLocator);
         return new CheckoutModal(driver);
     }
+
+    public CheckoutPage clickProceedToCheckoutAsLoggedIn() {
+        click(proceedToCheckoutButtonLocator);
+        return new CheckoutPage(driver);
+
+    }
 }

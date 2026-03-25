@@ -38,6 +38,7 @@ public class CheckoutTests extends BaseTest {
                 .clickSignupButton();
         new CreateAccountPage(driver)
                 .assertCreateAccountPageIsSuccessfullyLoaded()
+//TO DO refactor this part - need to create separate method for filling all details in CreateAccountPage
                 .clickGenderRadioButton(user.getGender())
                 .verifyNameField(user.getFirstName() + " " + user.getLastName())
                 .verifyEmailField(user.getEmail())
@@ -66,7 +67,9 @@ public class CheckoutTests extends BaseTest {
         mainMenu
                 .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName())
                 .clickCartButton()
-                .clickProceedToCheckoutAsGuest();
+                .clickProceedToCheckoutAsLoggedIn()
+                .assertCheckoutPageIsSuccessfullyLoaded();
+
 
     }
 }
