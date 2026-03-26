@@ -86,4 +86,22 @@ public class DataRandomizer {
         return faker.lorem().paragraph();
     }
 
+    public static String getRandomCardNumber() {
+        return faker.finance().creditCard();
+    }
+
+    public static String getRandomCvcNumber() {
+        return faker.numerify("###");
+    }
+
+    public static String getRandomMonthNumber() {
+        return String.format("%2d",faker.number().numberBetween(1,13));
+    }
+
+    public static String getRandomYearNumber() {
+        return String.format("%2d",faker.number().numberBetween(2026,2036));
+    }
+
+
+
 }

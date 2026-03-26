@@ -1,10 +1,11 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.helpers.DataRandomizer;
 import com.automationexercise.helpers.SecretManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CheckoutPage extends BasePage{
+public class CheckoutPage extends BasePage {
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -12,8 +13,10 @@ public class CheckoutPage extends BasePage{
 
     //Locators
     private final By checkoutInfoLocator = By.xpath("//div[@data-qa='checkout-info']");
-    private final By checkoutInfoLocator = By.xpath("//div[@data-qa='checkout-info']");
-    private final By checkoutInfoLocator = By.xpath("//div[@data-qa='checkout-info']");
+    private final By addressDetailsLocator = By.xpath("//*[contains(text(), 'Address Details')]");
+    private final By reviewYourOrderLocator = By.xpath("//*[contains(text(), 'Review Your Order')]");
+    private final By inputCommentTextareaLocator = By.xpath("//*[@name='message']");
+    private final By placeOrderButtonLocator = By.xpath("//*[text()='Place Order']");
     private final By firstNameLastNameDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_firstname address_lastname']");
     private final By companyNameDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_address1 address_address2'][1]");
     private final By firstAddressDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_address1 address_address2'][2]");
@@ -31,12 +34,30 @@ public class CheckoutPage extends BasePage{
 
     //Methods
 
-    public CheckoutPage assertCheckoutPageIsSuccessfullyLoaded(){
+    public CheckoutPage assertCheckoutPageIsSuccessfullyLoaded() {
         waitUntilUrlToBe(SecretManager.get("BASE_URL") + "checkout");
         waitUntilVisibilityOfElementLocated(checkoutInfoLocator);
         return this;
     }
 
-    public CheckoutPage assertAddressDetailsIsCorrect(){
+    public CheckoutPage assertAddressDetailsIsVisible() {
+        waitUntilVisibilityOfElementLocated(addressDetailsLocator);
+        return this;
     }
+
+    public CheckoutPage assertReviewYourOrderIsVisible() {
+        waitUntilVisibilityOfElementLocated(reviewYourOrderLocator);
+        return this;
+    }
+
+    public CheckoutPage inputRandomComment() {
+        type(inputCommentTextareaLocator, DataRandomizer.getRandomSubject());
+        return this;
+    }
+
+    public PaymentPage clickPlaceOrderButton() {
+        click(placeOrderButtonLocator);
+        return new PaymentPage(driver);
+    }
+
 }

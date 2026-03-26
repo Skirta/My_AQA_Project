@@ -1,6 +1,7 @@
 package com.automationexercise.tests.checkout;
 
 import com.automationexercise.components.CartModal;
+import com.automationexercise.helpers.DataRandomizer;
 import com.automationexercise.helpers.UserFactory;
 import com.automationexercise.models.UserRegistrationDetails;
 import com.automationexercise.pages.AccountCreatedPage;
@@ -12,7 +13,7 @@ import org.testng.annotations.Test;
 
 public class CheckoutTests extends BaseTest {
 
-    @Test (description = "Test Case 14: Place Order: Register while Checkout")
+    @Test(description = "Test Case 14: Place Order: Register while Checkout")
     public void shouldPlaceOrderWithRegistrationDuringCheckout() {
 
         UserRegistrationDetails user = UserFactory.createNewUser();
@@ -68,7 +69,17 @@ public class CheckoutTests extends BaseTest {
                 .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName())
                 .clickCartButton()
                 .clickProceedToCheckoutAsLoggedIn()
-                .assertCheckoutPageIsSuccessfullyLoaded();
+                .assertCheckoutPageIsSuccessfullyLoaded()
+                .assertAddressDetailsIsVisible()
+                .assertReviewYourOrderIsVisible()
+                .inputRandomComment()
+                .clickPlaceOrderButton()
+                .assertPaymentPageSuccessfullyLoaded()
+                .inputNameOnCard(user.getFirstName())
+                .inputCardNumber(DataRandomizer.getRandomCardNumber())
+                .inputCardCvc(DataRandomizer.getRandomCvcNumber())
+                .inputExpirationMonth(DataRandomizer.getRandomMonthNumber())
+                .inputExpirationYear(DataRandomizer.getRandomYearNumber());
 
 
     }
