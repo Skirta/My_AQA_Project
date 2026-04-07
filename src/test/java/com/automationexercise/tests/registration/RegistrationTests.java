@@ -16,8 +16,7 @@ public class RegistrationTests extends BaseTest {
     public void shouldRegisterNewUserSuccessfully() {
         UserRegistrationDetails user = UserFactory.createNewUser();
 
-        HomePage homePage = new HomePage(driver);
-        homePage
+        new HomePage(driver)
                 .openHomePage()
                 .assertHomePageIsSuccessfullyLoaded();
 
@@ -31,32 +30,12 @@ public class RegistrationTests extends BaseTest {
 
         new CreateAccountPage(driver)
                 .assertCreateAccountPageIsSuccessfullyLoaded()
-                .clickGenderRadioButton(user.getGender())
-                .verifyNameField(user.getFirstName() + " " + user.getLastName())
-                .verifyEmailField(user.getEmail())
-                .setPassword(user.getPassword())
-                .setDayOfBirth(user.getDayOfBirth())
-                .setMonthOfBirth(user.getMonthOfBirth())
-                .setYearOfBirth(user.getYearOfBirth())
-                .selectNewsletterCheckbox()
-                .selectSpecialOffersCheckbox()
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setCompany(user.getCompanyName())
-                .setFirstAddress(user.getFirstAddress())
-                .setSecondAddress(user.getSecondAddress())
-                .setCountry(user.getCountry())
-                .setState(user.getState())
-                .setCity(user.getCity())
-                .setZipcode(user.getZipCode())
-                .setMobileNumber(user.getMobileNumber())
+                .fillAllFieldsForRegistration(user)
                 .clickCreateAccountButton();
 
         new AccountCreatedPage(driver)
                 .assertAccountCreatedPageIsSuccessfullyLoaded()
-                .clickContinueButton();
-
-        homePage
+                .clickContinueButton()
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu

@@ -162,4 +162,27 @@ public class CreateAccountPage extends BasePage {
         click(createAccountButtonLocator);
         return new HomePage(driver);
     }
+
+    public CreateAccountPage fillAllFieldsForRegistration(UserRegistrationDetails user) {
+        this.clickGenderRadioButton(user.getGender())
+                .verifyNameField(user.getFirstName() + " " + user.getLastName())
+                .verifyEmailField(user.getEmail())
+                .setPassword(user.getPassword())
+                .setDayOfBirth(user.getDayOfBirth())
+                .setMonthOfBirth(user.getMonthOfBirth())
+                .setYearOfBirth(user.getYearOfBirth())
+                .selectNewsletterCheckbox()
+                .selectSpecialOffersCheckbox()
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setCompany(user.getCompanyName())
+                .setFirstAddress(user.getFirstAddress())
+                .setSecondAddress(user.getSecondAddress())
+                .setCountry(user.getCountry())
+                .setState(user.getState())
+                .setCity(user.getCity())
+                .setZipcode(user.getZipCode())
+                .setMobileNumber(user.getMobileNumber());
+        return this;
+    }
 }
