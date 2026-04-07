@@ -1,6 +1,5 @@
 package com.automationexercise.pages;
 
-import com.automationexercise.helpers.SecretManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -18,38 +17,44 @@ public class PaymentPage extends BasePage {
     private final By inputCardCvcLocator = By.xpath("//*[@data-qa='cvc']");
     private final By inputExpirationMonthLocator = By.xpath("//*[@data-qa='expiry-month']");
     private final By inputExpirationYearLocator = By.xpath("//*[@data-qa='expiry-year']");
+    private final By payAndConfirmOrderButtonLocator = By.xpath("//*[@data-qa='pay-button']");
+    private final By successMessageLocator = By.xpath("//div[@class='alert-success alert']");
 
     //Methods
 
     public PaymentPage assertPaymentPageSuccessfullyLoaded() {
-        waitUntilUrlToBe(SecretManager.get("BASE_URL") + "payment");
+        waitUntilUrlToBe("https://www.automationexercise.com/payment");
         waitUntilVisibilityOfElementLocated(paimentInformationLocator);
         return this;
     }
 
-    public PaymentPage inputNameOnCard(String name) {
-        type(inputNameOnCardLocator, name);
+    public PaymentPage inputNameOnCard(String nameOnCard) {
+        type(inputNameOnCardLocator, nameOnCard);
         return this;
     }
 
-    public PaymentPage inputCardNumber(String name) {
-        type(inputCardNumberLocator, name);
+    public PaymentPage inputCardNumber(String cardNumber) {
+        type(inputCardNumberLocator, cardNumber);
         return this;
     }
 
-    public PaymentPage inputCardCvc(String name) {
-        type(inputCardCvcLocator, name);
+    public PaymentPage inputCardCvc(String cardCvc) {
+        type(inputCardCvcLocator, cardCvc);
         return this;
     }
 
-    public PaymentPage inputExpirationMonth(String name) {
-        type(inputExpirationMonthLocator, name);
+    public PaymentPage inputExpirationMonth(String expirationMonth) {
+        type(inputExpirationMonthLocator, expirationMonth);
         return this;
     }
 
-    public PaymentPage inputExpirationYear(String name) {
-        type(inputExpirationYearLocator, name);
+    public PaymentPage inputExpirationYear(String expirationYear) {
+        type(inputExpirationYearLocator, expirationYear);
         return this;
     }
 
+    public PaymentDonePage clickPayAndConfirmOrderButton(){
+        click(payAndConfirmOrderButtonLocator);
+        return new PaymentDonePage(driver);
+    }
 }

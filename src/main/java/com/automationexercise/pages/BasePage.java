@@ -14,12 +14,14 @@ import java.util.List;
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected WebDriverWait fastWait;
     protected final Duration defaultTimeout = Duration.ofSeconds(5);
 
     //Конструктор для ініціалізації
     protected BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, defaultTimeout);
+        this.fastWait = new WebDriverWait(driver, defaultTimeout, Duration.ofMillis(100));
     }
 
     public Boolean waitUntilUrlToBe(String url) {
@@ -34,6 +36,14 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public WebElement waitUntilVisibilityOfElementLocated(By locator, Duration timeout) {
+        return new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public WebElement waitUntilVisibilityOfElementLocated(By locator, Duration timeout, Duration timeCheck) {
+        return new WebDriverWait(driver, timeout, timeCheck).until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
     public Boolean waitUntilInvisibilityOfElementLocated(By locator) {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated((locator)));
     }
@@ -42,9 +52,7 @@ public abstract class BasePage {
         return new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
     }
 
-    public WebElement waitUntilVisibilityOfElementLocated(By locator, Duration timeout) {
-        return new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
+
 
     public WebElement waitUntilElementClickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -65,6 +73,11 @@ public abstract class BasePage {
     protected void click(By locator) {
         WebElement webElement = waitUntilElementClickable(locator);
         click(webElement);
+    }
+
+    protected void javaScriptClick(By locator) {
+        WebElement element = waitUntilElementClickable(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
     protected void click(WebElement webElement) {

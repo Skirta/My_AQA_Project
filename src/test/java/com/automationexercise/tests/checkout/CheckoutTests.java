@@ -4,10 +4,7 @@ import com.automationexercise.components.CartModal;
 import com.automationexercise.helpers.DataRandomizer;
 import com.automationexercise.helpers.UserFactory;
 import com.automationexercise.models.UserRegistrationDetails;
-import com.automationexercise.pages.AccountCreatedPage;
-import com.automationexercise.pages.CartPage;
-import com.automationexercise.pages.CreateAccountPage;
-import com.automationexercise.pages.HomePage;
+import com.automationexercise.pages.*;
 import com.automationexercise.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -79,8 +76,12 @@ public class CheckoutTests extends BaseTest {
                 .inputCardNumber(DataRandomizer.getRandomCardNumber())
                 .inputCardCvc(DataRandomizer.getRandomCvcNumber())
                 .inputExpirationMonth(DataRandomizer.getRandomMonthNumber())
-                .inputExpirationYear(DataRandomizer.getRandomYearNumber());
-
-
+                .inputExpirationYear(DataRandomizer.getRandomYearNumber())
+                .clickPayAndConfirmOrderButton()
+                .assertPaymentDonePageSuccessfullyLoaded();
+        mainMenu
+                .clickDeleteAccountButton()
+                .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
+                .clickContinueButton();
     }
 }

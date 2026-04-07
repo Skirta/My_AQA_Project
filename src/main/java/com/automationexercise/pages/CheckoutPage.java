@@ -16,7 +16,7 @@ public class CheckoutPage extends BasePage {
     private final By addressDetailsLocator = By.xpath("//*[contains(text(), 'Address Details')]");
     private final By reviewYourOrderLocator = By.xpath("//*[contains(text(), 'Review Your Order')]");
     private final By inputCommentTextareaLocator = By.xpath("//*[@name='message']");
-    private final By placeOrderButtonLocator = By.xpath("//*[text()='Place Order']");
+    private final By placeOrderButtonLocator = By.xpath("//a[@href='/payment']");
     private final By firstNameLastNameDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_firstname address_lastname']");
     private final By companyNameDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_address1 address_address2'][1]");
     private final By firstAddressDeliveryAddressLocator = By.xpath("//*[@id='address_delivery']//li[@class='address_address1 address_address2'][2]");
@@ -56,8 +56,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public PaymentPage clickPlaceOrderButton() {
-        click(placeOrderButtonLocator);
+        javaScriptClick(placeOrderButtonLocator);
         return new PaymentPage(driver);
     }
-
 }

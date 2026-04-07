@@ -31,6 +31,7 @@ public class DriverManager {
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("autofill.profile_enabled", false);
         prefs.put("profile.password_manager_enabled", false);
+        prefs.put("autofill.credit_card_enabled", false);
         options.setExperimentalOption("prefs", prefs);
 
         if (System.getenv("CI") != null) {
