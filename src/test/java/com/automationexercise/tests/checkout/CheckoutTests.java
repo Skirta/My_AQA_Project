@@ -65,4 +65,16 @@ public class CheckoutTests extends BaseTest {
                 .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
                 .clickContinueButton();
     }
+
+    @Test (description = "Test Case 15: Place Order: Register before Checkout")
+    public void shouldPlaceOrderWithRegisteredUser() {
+        UserRegistrationDetails user = UserFactory.createNewUser();
+
+        new HomePage(driver)
+                .openHomePage()
+                .assertHomePageIsSuccessfullyLoaded();
+        mainMenu
+                .clickSignupLoginButton()
+
+    }
 }

@@ -39,8 +39,7 @@ public class RegistrationTests extends BaseTest {
                 .assertHomePageIsSuccessfullyLoaded();
 
         mainMenu
-                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName());
-        mainMenu
+                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName())
                 .clickDeleteAccountButton()
                 .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
                 .clickContinueButton();
