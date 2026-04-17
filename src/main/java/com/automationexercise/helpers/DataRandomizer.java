@@ -99,7 +99,7 @@ public class DataRandomizer {
     }
 
     public static String getRandomYearNumber() {
-        return String.format("%2d",faker.number().numberBetween(2026,2036));
+        return String.format("%2d",faker.number().numberBetween(2027,2036));
     }
 
 
