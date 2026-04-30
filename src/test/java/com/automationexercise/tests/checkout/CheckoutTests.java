@@ -70,11 +70,35 @@ public class CheckoutTests extends BaseTest {
     public void shouldPlaceOrderWithRegisteredUser() {
         UserRegistrationDetails user = UserFactory.createNewUser();
 
-        new HomePage(driver)
+        HomePage homePage = new HomePage(driver)
                 .openHomePage()
                 .assertHomePageIsSuccessfullyLoaded();
         mainMenu
                 .clickSignupLoginButton()
+                .assertNewUserSignupTextsVisible()
+                .setNewUserName(user.getFirstName() + " " + user.getLastName())
+                .setNewUserEmail(user.getEmail())
+                .clickSignupButton()
+                .assertCreateAccountPageIsSuccessfullyLoaded()
+                .fillAllFieldsForRegistration(user)
+                .clickCreateAccountButton()
+                .assertAccountCreatedPageIsSuccessfullyLoaded()
+                .clickContinueButton()
+                .assertHomePageIsSuccessfullyLoaded()
+                .removeAds();
+        mainMenu
+                .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName())
+                .clickProductsButton()
+                .assertProductsPageIsSuccessfullyLoaded()
+                .addRandomProductToCart();
+        new CartModal(driver)
+                .assertAddedModalIsSuccessfullyLoaded()
+                .clickViewCartButton()
+                .assertCartPageIsSuccessfullyLoaded()
+                .clickProceedToCheckoutAsLoggedIn();
+
+
+
 
     }
 }

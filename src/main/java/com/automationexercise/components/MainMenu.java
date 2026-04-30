@@ -32,7 +32,7 @@ public class MainMenu extends BasePage {
     }
 
     public ProductsPage clickProductsButton() {
-        click(productsButtonLocator);
+        javaScriptClick(productsButtonLocator);
         return new ProductsPage(driver);
     }
 

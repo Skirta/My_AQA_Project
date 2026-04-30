@@ -158,9 +158,9 @@ public class CreateAccountPage extends BasePage {
         return this;
     }
 
-    public HomePage clickCreateAccountButton() {
+    public AccountCreatedPage clickCreateAccountButton() {
         click(createAccountButtonLocator);
-        return new HomePage(driver);
+        return new AccountCreatedPage(driver);
     }
 
     public CreateAccountPage fillAllFieldsForRegistration(UserRegistrationDetails user) {
