@@ -2,6 +2,7 @@ package com.automationexercise.tests.checkout;
 
 import com.automationexercise.components.CartModal;
 import com.automationexercise.helpers.DataRandomizer;
+import com.automationexercise.helpers.SecretManager;
 import com.automationexercise.helpers.UserFactory;
 import com.automationexercise.models.UserRegistrationDetails;
 import com.automationexercise.pages.*;
@@ -67,7 +68,7 @@ public class CheckoutTests extends BaseTest {
     }
 
     @Test(description = "Test Case 15: Place Order: Register before Checkout")
-    public void shouldPlaceOrderWithRegisteredUser() {
+    public void shouldPlaceOrderWithRegistrationBeforeCheckout() {
         UserRegistrationDetails user = UserFactory.createNewUser();
 
         new HomePage(driver)
@@ -113,5 +114,44 @@ public class CheckoutTests extends BaseTest {
                 .clickDeleteAccountButton()
                 .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
                 .clickContinueButton();
+    }
+
+    @Test (description = "Test Case 16: Place Order: Login before Checkout")
+    public void shouldPlaceOrderWithLoggedUser() {
+
+        HomePage homePage = new HomePage(driver)
+                .openHomePage()
+                .assertHomePageIsSuccessfullyLoaded();
+        mainMenu
+                .clickSignupLoginButton()
+                .assertLoginToYourAccountTextIsVisible()
+                .setOldUserEmail(SecretManager.get("USER_EMAIL"))
+                .setOldUserPassword(SecretManager.get("USER_PASSWORD"))
+                .clickLoginButton()
+                .assertHomePageIsSuccessfullyLoaded();
+        mainMenu
+                .assertUserNameIsDisplayed("Logged in as " + SecretManager.get("USER_NAME"))
+                .clickProductsButton()
+                .assertProductsPageIsSuccessfullyLoaded()
+                .addRandomProductToCart();
+        new CartModal(driver)
+                .assertAddedModalIsSuccessfullyLoaded()
+                .clickViewCartButton()
+                .assertCartPageIsSuccessfullyLoaded()
+                .clickProceedToCheckoutAsLoggedIn()
+                .assertCheckoutPageIsSuccessfullyLoaded()
+                .assertAddressDetailsIsVisible()
+                .assertReviewYourOrderIsVisible()
+                .inputRandomComment()
+                .clickPlaceOrderButton()
+                .assertPaymentPageSuccessfullyLoaded()
+                .inputNameOnCard(SecretManager.get("USER_NAME"))
+                .inputCardNumber(DataRandomizer.getRandomCardNumber())
+                .inputCardCvc(DataRandomizer.getRandomCvcNumber())
+                .inputExpirationMonth(DataRandomizer.getRandomMonthNumber())
+                .inputExpirationYear(DataRandomizer.getRandomYearNumber())
+                .clickPayAndConfirmOrderButton()
+                .assertPaymentDonePageSuccessfullyLoaded()
+                .assertSuccessMessageIsVisible();
     }
 }
