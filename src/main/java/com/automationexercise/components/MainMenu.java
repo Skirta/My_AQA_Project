@@ -62,12 +62,7 @@ public class MainMenu extends BasePage {
     }
 
     public DeleteAccountPage clickDeleteAccountButton() {
-        WebElement button = waitUntilElementClickable(deleteButtonLocator);
-        removeAds(); // Обов'язково чистимо рекламу перед кліком
-
-        // Використовуємо JS клік, щоб пробити рекламний шар
-        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
-
+        javaScriptClick(deleteButtonLocator);
         return new DeleteAccountPage(driver);
     }
 

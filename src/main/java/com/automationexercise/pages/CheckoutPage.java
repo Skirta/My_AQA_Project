@@ -36,7 +36,7 @@ public class CheckoutPage extends BasePage {
     //Methods
 
     public CheckoutPage assertCheckoutPageIsSuccessfullyLoaded() {
-        waitUntilUrlToBe(SecretManager.get("BASE_URL") + "checkout");
+        waitUntilUrlContains(SecretManager.get("BASE_URL") + "checkout");
         waitUntilVisibilityOfElementLocated(checkoutInfoLocator);
         return this;
     }

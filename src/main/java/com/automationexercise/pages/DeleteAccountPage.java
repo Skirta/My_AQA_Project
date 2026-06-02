@@ -22,7 +22,7 @@ public class DeleteAccountPage extends BasePage {
     }
 
     public HomePage clickContinueButton(){
-        click(continueButtonLocator);
+        javaScriptClick(continueButtonLocator);
         return new HomePage(driver);
     }
 }

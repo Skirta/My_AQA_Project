@@ -20,12 +20,7 @@ public class AccountCreatedPage extends BasePage {
     }
 
     public HomePage clickContinueButton() {
-        WebElement button = waitUntilElementClickable(continueButtonLocator);
-        removeAds(); // Твій метод, що видаляє фрейми
-
-        // Тиснемо на кнопку "силою" скрипта, ігноруючи шар реклами зверху
-        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
-
+        javaScriptClick(continueButtonLocator);
         return new HomePage(driver);
     }
 }

@@ -66,11 +66,11 @@ public class CheckoutTests extends BaseTest {
                 .clickContinueButton();
     }
 
-    @Test (description = "Test Case 15: Place Order: Register before Checkout")
+    @Test(description = "Test Case 15: Place Order: Register before Checkout")
     public void shouldPlaceOrderWithRegisteredUser() {
         UserRegistrationDetails user = UserFactory.createNewUser();
 
-        HomePage homePage = new HomePage(driver)
+        new HomePage(driver)
                 .openHomePage()
                 .assertHomePageIsSuccessfullyLoaded();
         mainMenu
@@ -84,8 +84,7 @@ public class CheckoutTests extends BaseTest {
                 .clickCreateAccountButton()
                 .assertAccountCreatedPageIsSuccessfullyLoaded()
                 .clickContinueButton()
-                .assertHomePageIsSuccessfullyLoaded()
-                .removeAds();
+                .assertHomePageIsSuccessfullyLoaded();
         mainMenu
                 .assertUserNameIsDisplayed("Logged in as " + user.getFirstName() + " " + user.getLastName())
                 .clickProductsButton()
@@ -95,10 +94,24 @@ public class CheckoutTests extends BaseTest {
                 .assertAddedModalIsSuccessfullyLoaded()
                 .clickViewCartButton()
                 .assertCartPageIsSuccessfullyLoaded()
-                .clickProceedToCheckoutAsLoggedIn();
-
-
-
-
+                .clickProceedToCheckoutAsLoggedIn()
+                .assertCheckoutPageIsSuccessfullyLoaded()
+                .assertAddressDetailsIsVisible()
+                .assertReviewYourOrderIsVisible()
+                .inputRandomComment()
+                .clickPlaceOrderButton()
+                .assertPaymentPageSuccessfullyLoaded()
+                .inputNameOnCard(user.getFirstName())
+                .inputCardNumber(DataRandomizer.getRandomCardNumber())
+                .inputCardCvc(DataRandomizer.getRandomCvcNumber())
+                .inputExpirationMonth(DataRandomizer.getRandomMonthNumber())
+                .inputExpirationYear(DataRandomizer.getRandomYearNumber())
+                .clickPayAndConfirmOrderButton()
+                .assertPaymentDonePageSuccessfullyLoaded()
+                .assertSuccessMessageIsVisible();
+        mainMenu
+                .clickDeleteAccountButton()
+                .assertAccountIsDeletedSuccessfully("ACCOUNT DELETED!")
+                .clickContinueButton();
     }
 }
