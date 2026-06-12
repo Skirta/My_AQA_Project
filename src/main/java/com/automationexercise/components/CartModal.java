@@ -1,9 +1,13 @@
 package com.automationexercise.components;
 
+import com.automationexercise.models.ProductModel;
 import com.automationexercise.pages.BasePage;
 import com.automationexercise.pages.CartPage;
+import com.automationexercise.pages.ProductsPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.List;
 
 public class CartModal extends BasePage {
     public CartModal(WebDriver driver){
@@ -29,5 +33,10 @@ public class CartModal extends BasePage {
     public CartPage clickViewCartButton() {
         waitUntilElementClickable(viewCartButtonLocator).click();
         return new CartPage(driver);
+    }
+
+    public CartPage clickViewCartButton(List<ProductModel> productsList) {
+        waitUntilElementClickable(viewCartButtonLocator).click();
+        return new CartPage(driver, productsList);
     }
 }

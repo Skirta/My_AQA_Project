@@ -35,6 +35,10 @@ public class CartPage extends BasePage {
     private final By productsLocator = By.xpath("//tr[contains(@id,'product-')]");
     private final By quantityLocator = By.xpath("//td[@class='cart_quantity']/button");
     private final By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(), 'Proceed To Checkout')]");
+    private By deleteProductButtonLocator(String productId) {
+        return By.xpath("//a[@data-product-id='" + productId + "']");
+    }
+    private final By emptyCartTextLocator = By.xpath("//*[contains(text(), 'Cart is empty!')]");
 
 
     //Methods
@@ -87,6 +91,16 @@ public class CartPage extends BasePage {
     public CheckoutPage clickProceedToCheckoutAsLoggedIn() {
         click(proceedToCheckoutButtonLocator);
         return new CheckoutPage(driver);
+    }
 
+    public CartPage clickDeleteProductButton() {
+        String productId = productsList.get(0).getId();
+        click(deleteProductButtonLocator(productId));
+        return this;
+    }
+
+    public CartPage assertCartIsEmpty() {
+        waitUntilVisibilityOfElementLocated(emptyCartTextLocator);
+        return this;
     }
 }
