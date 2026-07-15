@@ -13,6 +13,9 @@ public class HomePage extends BasePage {
     //Locators
     private final By cookieAggryButtonLocator = By.xpath("//button[@aria-label='Consent']");
     private final By logoLocator = By.xpath("//img[contains(@src,'logo.png')]");
+    private final By categoryLocator = By.xpath("//div[@class='left-sidebar']/h2[text()='Category']");
+    private final By womanCategoryLocator = By.xpath("//div[@class='left-sidebar']//a[@href='#Women']");
+    private final By dressLinkInWomanCategoryLocator = By.xpath("//div[@id='Women']//a[contains(text(), 'Dress')]");
 
     //Methods
     public HomePage openHomePage() {
@@ -33,5 +36,20 @@ public class HomePage extends BasePage {
         removeAds();
         waitUntilUrlToBe(SecretManager.get("BASE_URL"));
         return this;
+    }
+
+    public HomePage assertCategoriesAreVisible(){
+        waitUntilVisibilityOfElementLocated(categoryLocator);
+        return this;
+    }
+
+    public HomePage clickOnWomanCategory() {
+        click(womanCategoryLocator);
+        return this;
+    }
+
+    public CategoryProductsPage clickOnDressInWomanCategory() {
+        click(dressLinkInWomanCategoryLocator);
+        return new CategoryProductsPage(driver);
     }
 }

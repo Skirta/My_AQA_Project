@@ -85,4 +85,20 @@ public class ProductTests extends BaseTest {
                 .assertCartPageIsSuccessfullyLoaded()
                 .assertCorrectQuantity("4");
     }
+
+    @Test(description = "Test Case 18: View Category Products")
+    public void shouldVerifyProductsCategory() {
+        new HomePage(driver)
+                .openHomePage()
+                .assertHomePageIsSuccessfullyLoaded()
+                .assertCategoriesAreVisible()
+                .clickOnWomanCategory()
+                .clickOnDressInWomanCategory()
+                .assertCategoryProductsPageIsSuccessfullyLoaded();
+
+
+
+
+
+    }
 }
