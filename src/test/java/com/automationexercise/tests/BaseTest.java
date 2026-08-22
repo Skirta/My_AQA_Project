@@ -16,6 +16,7 @@ public class BaseTest {
     public void startBrowser() {
         driver = DriverManager.getDriver();
         mainMenu = new MainMenu(driver);
+        footer = new Footer(driver);
     }
 
     @AfterMethod(alwaysRun = true)
