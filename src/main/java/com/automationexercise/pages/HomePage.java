@@ -20,7 +20,7 @@ public class HomePage extends BasePage {
     //Methods
     public HomePage openHomePage() {
         driver.get(SecretManager.get("BASE_URL"));
-        if (!driver.findElements(cookieAggryButtonLocator).isEmpty()){
+        if (!driver.findElements(cookieAggryButtonLocator).isEmpty()) {
             clickConsentButton();
         }
         return this;
@@ -38,7 +38,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage assertCategoriesAreVisible(){
+    public HomePage assertCategoriesAreVisible() {
         waitUntilVisibilityOfElementLocated(categoryLocator);
         return this;
     }

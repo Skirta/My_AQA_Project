@@ -94,11 +94,10 @@ public class ProductTests extends BaseTest {
                 .assertCategoriesAreVisible()
                 .clickOnWomanCategory()
                 .clickOnDressInWomanCategory()
-                .assertCategoryProductsPageIsSuccessfullyLoaded();
-
-
-
-
-
+                .assertCategoryProductsPageIsSuccessfullyLoaded()
+                .verifyProductsTitleTextIs("WOMEN - Dress PRODUCTS")
+                .clickOnMenCategory()
+                .clickOnJeansInMenCategory()
+                .verifyProductsTitleTextIs("Men - Jeans PRODUCTS");
     }
 }
